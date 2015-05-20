@@ -25,7 +25,7 @@ app.get('/', function(request, response) {
 	response.send('Hello World!');
 });
 
-app.get('/foos', function(request, response) {
+app.post('/foos', function(request, response) {
 
 	var request = require('request')
 
