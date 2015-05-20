@@ -27,7 +27,7 @@ app.get('/', function(request, response)
 {
 	var foos = new Foos ({ player1: "A", player2: "B", player3: "C", player4: "D" });
 	foos.save(function (err) {if (err) console.log ('Error on save!')});
-	
+
 	response.send('Success');
 });
 
@@ -39,8 +39,7 @@ app.get('/get', function (request, response)
 
 app.post('/foos', function(request, response)
 {
-	console.log(request);
-	console.log(response);
+	console.log(request.params);
 	response.send('Success');
 });
 
