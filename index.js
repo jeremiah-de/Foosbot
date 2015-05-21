@@ -94,6 +94,27 @@ app.post('/foos', function(request, response)
   	response.send('Success');
 });
 
+app.post('/gogogo', function(request, response)
+{
+	var playerMentionNames = Array();
+	Player.find(function(err, players) {
+  		if (!err) {
+  			for (var i = 0; i < players.length; i++) {
+  				var mentionName = players[i].mention_name;
+  				if (mentionName) {
+  					playerMentionNames.push("@" + mentionName);
+  				}
+  			}
+			sendToRoom(playerMentionNames.join(" ") + " go go go!");
+			Player.remove({}, function (err) {
+				if (err) console.log('Error deleting!');
+			});
+  		}
+	});
+
+  	response.send('Success');
+});
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
