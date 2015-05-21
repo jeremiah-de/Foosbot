@@ -19,31 +19,32 @@ mongoose.connect(uristring, function (err, res) {
   }
 });
 
-var foosSchema = new mongoose.Schema({
-  player1: { type: String },
-  player2: { type: String },
-  player3: { type: String },
-  player4: { type: String }
+var playerSchema = new mongoose.Schema({
+  handle: { type: String }
 });
-var Foos = mongoose.model('Foos', foosSchema);
+var Player = mongoose.model('Player', playerSchema);
 
 app.get('/', function(request, response)
 {
-	var foos = new Foos ({ player1: "A", player2: "B", player3: "C", player4: "D" });
-	foos.save(function (err) {if (err) console.log ('Error on save!')});
-
 	response.send('Success');
 });
 
 app.get('/get', function (request, response)
 {
-	console.log(storage.getItem('name'));
+	Player.find(function(err, players) {
+  	if (err) return console.error(err);
+  		console.dir(players);
+	});
 	response.send('Success');
 });
 
 app.post('/foos', function(request, response)
 {
-	console.log(request.body);
+	console.log(request.body.item.message.from);
+
+	var player = new Player ({ name: "bob" });
+	foos.save(function (err) {if (err) console.log ('Error on save!')});
+
   	response.send('Success');
 });
 
