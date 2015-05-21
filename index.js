@@ -101,9 +101,9 @@ function sendToRoom(message)
 	var request = require('request')
 
     request({
-        url: 'https://api.hipchat.com/v2/room/1475277/notification',
+        url: process.env.HIPCHAT_URL,
         method: 'POST',
-        qs: { 'auth_token': 'W22SSU8tc0lzHE3S854KKoNd4sTQAgpPai0Myd7V' },
+        qs: { 'auth_token': process.env.HIPCHAT_AUTH_TOKEN },
         json: { message: message, notify: true },
         headers: { 'Content-Type' : 'application/json' }
     }, function(error, response, body) {
