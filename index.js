@@ -49,7 +49,7 @@ app.post('/foos', function(request, response)
 
 	Player.findOne({mention_name: playerMentionName}, function(err, existingPlayer) {
   		if (existingPlayer) {
-  			sendToRoom(existingPlayer.name + " is already playing.");
+			sendToRoom(existingPlayer.name + " wants to play some foosball. @here Who's in?");
   		} else {
 			var player = new Player ({ name: playerName, mention_name: playerMentionName });
 			player.save(function (err) {
@@ -73,7 +73,9 @@ app.post('/foos', function(request, response)
 				  					playerMentionNames.push("@" + mentionName);
 				  				}
 				  			}
-							if (playerNames.length < 4) {
+				  			if (playerNames.length == 1) {
+				  				sendToRoom(playerNames[0] + " wants to play some foosball. @here Who's in?");
+				  			} else if (playerNames.length < 4) {
 								sendToRoom("Current players: " + playerNames.join(", "));
 							} else {
 								sendToRoom(playerMentionNames.join(" ") + " go go go!");
