@@ -48,7 +48,24 @@ app.post('/foos', function(request, response)
 	console.log("Player: " + playerName);
 
 	var player = new Player ({ name: playerName, mention_name: playerMentionName });
-	player.save(function (err) { if (err) console.log('Error on save!'); else console.log('Saved player: ' + playerName); } );
+	player.save(function (err) {
+		if (err) {
+			console.log('Error on save!');
+		} else {
+			console.log('Saved player: ' + playerName);
+
+			//retrieve all current players
+			var playerMentionNames = Array();
+			Player.find(function(err, players) {
+		  		if (!err) {
+		  			for (var i = 0; i < players.length; i++) {
+		  				playerMentionNames.push(players[i].mention_name);
+		  			}
+					sendToRoom("Current players: " + playerMentionNames.join());
+		  		}
+			});
+		}
+	});
 
   	response.send('Success');
 });
