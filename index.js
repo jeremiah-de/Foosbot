@@ -48,7 +48,7 @@ app.post('/foos', function(request, response)
 	console.log("Player: " + playerName);
 
 	var player = new Player ({ name: playerName, mention_name: playerMentionName });
-	player.save(function (err) { if (err) console.log('Error on save!') else console.log('Saved player: ' + playerName); } );
+	player.save(function (err) { if (err) console.log('Error on save!'); else console.log('Saved player: ' + playerName); } );
 
   	response.send('Success');
 });
