@@ -60,8 +60,8 @@ app.post('/foos', function(request, response)
 		  		if (!err) {
 		  			for (var i = 0; i < players.length; i++) {
 		  				var mentionName = players[i].mention_name;
-		  				if (mention_name) {
-		  					playerMentionNames.push("@" + mention_name);
+		  				if (mentionName) {
+		  					playerMentionNames.push("@" + mentionName);
 		  				}
 		  			}
 					sendToRoom("Current players: " + playerMentionNames.join());
