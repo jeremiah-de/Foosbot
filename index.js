@@ -64,7 +64,7 @@ app.post('/foos', function(request, response)
 		  					playerMentionNames.push("@" + mentionName);
 		  				}
 		  			}
-					sendToRoom("Current players: " + playerMentionNames.join());
+					sendToRoom("Current players: " + playerMentionNames.join(" , "));
 		  		}
 			});
 		}
