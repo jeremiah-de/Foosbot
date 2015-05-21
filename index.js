@@ -47,40 +47,47 @@ app.post('/foos', function(request, response)
 	var playerMentionName = request.body.item.message.from.mention_name;
 	console.log("Player: " + playerName);
 
-	var player = new Player ({ name: playerName, mention_name: playerMentionName });
-	player.save(function (err) {
-		if (err) {
-			console.log('Error on save!');
-		} else {
-			console.log('Saved player: ' + playerName);
+	Player.findOne({mention_name: playerMentionName}, function(err, existingPlayer) {
+  		if (existingPlayer) {
+  			sendToRoom(existingPlayer.name + " is already playing.");
+  		} else {
+			var player = new Player ({ name: playerName, mention_name: playerMentionName });
+			player.save(function (err) {
+				if (err) {
+					console.log('Error on save!');
+				} else {
+					console.log('Saved player: ' + playerName);
 
-			//retrieve all current players
-			var playerNames = Array();
-			var playerMentionNames = Array();
-			Player.find(function(err, players) {
-		  		if (!err) {
-		  			for (var i = 0; i < players.length; i++) {
-		  				var name = players[i].name;
-		  				if (name) {
-		  					playerNames.push(name);
-		  				}
-		  				var mentionName = players[i].mention_name;
-		  				if (mentionName) {
-		  					playerMentionNames.push("@" + mentionName);
-		  				}
-		  			}
-					if (playerNames.length < 4) {
-						sendToRoom("Current players: " + playerNames.join(", "));
-					} else {
-						sendToRoom(playerMentionNames.join(" ") + " go go go!");
-						Player.remove({}, function (err) {
-							if (err) console.log('Error deleting!');
-						});
-					}
-		  		}
+					//retrieve all current players
+					var playerNames = Array();
+					var playerMentionNames = Array();
+					Player.find(function(err, players) {
+				  		if (!err) {
+				  			for (var i = 0; i < players.length; i++) {
+				  				var name = players[i].name;
+				  				if (name) {
+				  					playerNames.push(name);
+				  				}
+				  				var mentionName = players[i].mention_name;
+				  				if (mentionName) {
+				  					playerMentionNames.push("@" + mentionName);
+				  				}
+				  			}
+							if (playerNames.length < 4) {
+								sendToRoom("Current players: " + playerNames.join(", "));
+							} else {
+								sendToRoom(playerMentionNames.join(" ") + " go go go!");
+								Player.remove({}, function (err) {
+									if (err) console.log('Error deleting!');
+								});
+							}
+				  		}
+					});
+				}
 			});
-		}
-	});
+  		}
+  	});
+
 
   	response.send('Success');
 });
