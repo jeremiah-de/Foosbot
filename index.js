@@ -69,8 +69,9 @@ app.post('/foos', function(request, response)
 		  					playerMentionNames.push("@" + mentionName);
 		  				}
 		  			}
-					sendToRoom("Current players: " + playerNames.join(", "));
-					if (playerNames.length == 4) {
+					if (playerNames.length < 4) {
+						sendToRoom("Current players: " + playerNames.join(", "));
+					} else {
 						sendToRoom(playerMentionNames.join(" ") + " go go go!");
 						Player.remove({}, function (err) {
 							if (err) console.log('Error deleting!');
