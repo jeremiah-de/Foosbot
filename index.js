@@ -21,7 +21,7 @@ mongoose.connect(uristring, function (err, res) {
 
 var playerSchema = new mongoose.Schema({
   name: { type: String },
-  mention_name { type: String }
+  mention_name: { type: String }
 });
 var Player = mongoose.model('Player', playerSchema);
 
