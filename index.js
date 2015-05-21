@@ -20,7 +20,8 @@ mongoose.connect(uristring, function (err, res) {
 });
 
 var playerSchema = new mongoose.Schema({
-  handle: { type: String }
+  name: { type: String },
+  mention_name { type: String }
 });
 var Player = mongoose.model('Player', playerSchema);
 
@@ -32,19 +33,22 @@ app.get('/', function(request, response)
 app.get('/get', function (request, response)
 {
 	Player.find(function(err, players) {
-  	if (err) return console.error(err);
-  		console.dir(players);
+  		if (err) {
+			response.send('Error: ' + err);
+  			return console.error(err);
+  		}
+  		response.send(players);
 	});
-	response.send('Success');
 });
 
 app.post('/foos', function(request, response)
 {
-	var playerName = request.body.item.message.from.mention_name;
+	var playerName = request.body.item.message.from.name;
+	var playerMentionName = request.body.item.message.from.mention_name;
 	console.log("Player: " + playerName);
 
-	var player = new Player ({ name: playerName });
-	player.save(function (err) {if (err) console.log ('Error on save!')});
+	var player = new Player ({ name: playerName, mention_name: playerMentionName });
+	player.save(function (err) { if (err) console.log('Error on save!') else console.log('Saved player: ' + playerName); } );
 
   	response.send('Success');
 });
