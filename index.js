@@ -65,6 +65,9 @@ app.post('/foos', function(request, response)
 		  				}
 		  			}
 					sendToRoom("Current players: " + playerMentionNames.join(" , "));
+					Player.remove({}, function (err) {
+						if (err) console.log('Error deleting!');
+					});
 		  		}
 			});
 		}
