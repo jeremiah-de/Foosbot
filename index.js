@@ -39,7 +39,7 @@ app.get('/get', function (request, response)
 
 app.post('/foos', function(request, response)
 {
-	console.log(request.body);
+	console.log(request.query);
 	response.send('Success');
 });
 
