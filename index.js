@@ -40,10 +40,11 @@ app.get('/get', function (request, response)
 
 app.post('/foos', function(request, response)
 {
-	console.log(request.body.item.message.from);
+	var playerName = request.body.item.message.from.mention_name;
+	console.log("Player: " + playerName);
 
-	var player = new Player ({ name: "bob" });
-	foos.save(function (err) {if (err) console.log ('Error on save!')});
+	var player = new Player ({ name: playerName });
+	player.save(function (err) {if (err) console.log ('Error on save!')});
 
   	response.send('Success');
 });
