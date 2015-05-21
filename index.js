@@ -55,19 +55,27 @@ app.post('/foos', function(request, response)
 			console.log('Saved player: ' + playerName);
 
 			//retrieve all current players
+			var playerNames = Array();
 			var playerMentionNames = Array();
 			Player.find(function(err, players) {
 		  		if (!err) {
 		  			for (var i = 0; i < players.length; i++) {
+		  				var name = players[i].name;
+		  				if (name) {
+		  					playerNames.push(name);
+		  				}
 		  				var mentionName = players[i].mention_name;
 		  				if (mentionName) {
 		  					playerMentionNames.push("@" + mentionName);
 		  				}
 		  			}
-					sendToRoom("Current players: " + playerMentionNames.join(" , "));
-					Player.remove({}, function (err) {
-						if (err) console.log('Error deleting!');
-					});
+					sendToRoom("Current players: " + playerNames.join(", "));
+					if (playerNames.length == 4) {
+						sendToRoom(playerMentionNames.join(" ") + " go go go!");
+						Player.remove({}, function (err) {
+							if (err) console.log('Error deleting!');
+						});
+					}
 		  		}
 			});
 		}
