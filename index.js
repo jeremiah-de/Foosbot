@@ -59,7 +59,10 @@ app.post('/foos', function(request, response)
 			Player.find(function(err, players) {
 		  		if (!err) {
 		  			for (var i = 0; i < players.length; i++) {
-		  				playerMentionNames.push(players[i].mention_name);
+		  				var mentionName = players[i].mention_name;
+		  				if (mention_name) {
+		  					playerMentionNames.push("@" + mention_name);
+		  				}
 		  			}
 					sendToRoom("Current players: " + playerMentionNames.join());
 		  		}
