@@ -74,7 +74,7 @@ function foosIn(playerName, playerMentionName)
 
 	Player.findOne({mention_name: playerMentionName}, function(err, existingPlayer) {
   		if (existingPlayer) {
-			sendToRoom(existingPlayer.name + " wants to play some foosball. @here Who's in?");
+			sendToRoom(existingPlayer.name + " is getting impatient. Who @here is going to play?");
   		} else {
 			var player = new Player ({ name: playerName, mention_name: playerMentionName });
 			player.save(function (err) {
