@@ -33,6 +33,11 @@ app.get('/', function(request, response)
 app.post('/test', function (request, response)
 {
 	console.log(request.body.item.message);
+
+	var message = request.body.item.message.message;
+
+	if (message.indexOf("ok") != -1) console.log("ok");
+
   	response.send("success");
 });
 
@@ -40,6 +45,10 @@ app.post('/foos', function(request, response)
 {
 	var playerName = request.body.item.message.from.name;
 	var playerMentionName = request.body.item.message.from.mention_name;
+}
+
+function foosIn(playerName, playerMentionName)
+{
 	console.log("Player: " + playerName);
 
 	Player.findOne({mention_name: playerMentionName}, function(err, existingPlayer) {
@@ -89,7 +98,7 @@ app.post('/foos', function(request, response)
   	response.send('Success');
 });
 
-app.post('/gogogo', function(request, response)
+function foosGogogo()
 {
 	var playerMentionNames = Array();
 	Player.find(function(err, players) {
@@ -107,7 +116,7 @@ app.post('/gogogo', function(request, response)
   		}
 	});
 
-  	response.send('Success');
+  	response.send('success');
 });
 
 app.listen(app.get('port'), function() {
