@@ -52,7 +52,7 @@ app.post('/foos', function(request, response)
 	} else if (message.indexOf("gogogo") != -1) {
 		foosGogogo();
 	} else {
-		sendToRoom("Usage:\n/foos");
+		sendToRoom("Usage: /foos [COMMAND]<br> <strong>in</strong> adds you to the current game queue<br> <strong>gogogo</strong> notifies all players and clears the queue");
 	}
 });
 
@@ -140,7 +140,7 @@ function sendToRoom(message)
         url: process.env.HIPCHAT_URL,
         method: 'POST',
         qs: { 'auth_token': process.env.HIPCHAT_AUTH_TOKEN },
-        json: { message: message, notify: true },
+        json: { message: message, notify: true, message_format: 'html' },
         headers: { 'Content-Type' : 'application/json' }
     }, function(error, response, body) {
 	    if(error) {
