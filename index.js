@@ -136,7 +136,7 @@ function foosGogogo()
 	var playerMentionNames = Array();
 	Player.find(function(err, players) {
   		if (!err) {
-  			if (1 || players.length > 1) {
+  			if (players.length > 1) {
 	  			for (var i = 0; i < players.length; i++) {
 	  				var mentionName = players[i].mention_name;
 	  				if (mentionName) {
@@ -175,7 +175,7 @@ function foosWho()
 					if (err) console.log('Error deleting!');
 				});
 			} else {
-				sendToRoom("Nobody wants to play (sadpanda)");
+				sendToRoom("Nobody wants to play :(");
 			}
   		}
 	});
@@ -190,7 +190,7 @@ function foosClear()
 			console.log('Error deleting!');
 			sendToRoom("Oops, something went wrong.");
 		} else {
-			sendToRoom("Queue cleared.");
+			sendToRoom("Queue cleared");
 		}
 	});
 
