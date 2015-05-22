@@ -66,6 +66,8 @@ app.post('/foos', function(request, response)
 		usage.push("<strong>clear</strong> clears the queue");
 		sendToRoom(usage.join("<br>"));
 	}
+
+  	response.send('Success');
 });
 
 function foosIn(playerName, playerMentionName)
@@ -111,9 +113,6 @@ function foosIn(playerName, playerMentionName)
 			});
   		}
   	});
-
-
-  	response.send('Success');
 }
 
 function foosOut(playerName, playerMentionName)
@@ -127,8 +126,6 @@ function foosOut(playerName, playerMentionName)
 			});
   		}
   	});
-
-  	response.send('success');
 }
 
 function foosGogogo()
@@ -153,8 +150,6 @@ function foosGogogo()
   			}
   		}
 	});
-
-  	response.send('success');
 }
 
 function foosWho()
@@ -179,8 +174,6 @@ function foosWho()
 			}
   		}
 	});
-
-  	response.send('success');
 }
 
 function foosClear()
@@ -193,8 +186,6 @@ function foosClear()
 			sendToRoom("Queue cleared");
 		}
 	});
-
-  	response.send('success');
 }
 
 app.listen(app.get('port'), function() {
