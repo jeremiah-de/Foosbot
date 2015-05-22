@@ -53,8 +53,18 @@ app.post('/foos', function(request, response)
 		foosOut(playerName, playerMentionName);
 	} else if (message.indexOf("gogogo") != -1) {
 		foosGogogo();
+	} else if (message.indexOf("who") != -1) {
+		foosWho();
+	} else if (message.indexOf("clear") != -1) {
+		foosClear();
 	} else {
-		sendToRoom("Usage: /foos [COMMAND]<br> <strong>in</strong> adds you to the current game queue<br> <strong>out</strong> removes you from the current game queue<br> <strong>gogogo</strong> notifies all players and clears the queue");
+		var usage = Array("Usage: /foos [COMMAND]");
+		usage.push("<strong>in</strong> adds you to the current game queue");
+		usage.push("<strong>out</strong> removes you from the current game queue");
+		usage.push("<strong>gogogo</strong> notifies all players and clears the queue");
+		usage.push("<strong>who</strong> lists the players in the queue");
+		usage.push("<strong>clear</strong> clears the queue");
+		sendToRoom(usage.join("<br>"));
 	}
 });
 
@@ -89,14 +99,11 @@ function foosIn(playerName, playerMentionName)
 				  				}
 				  			}
 				  			if (playerNames.length == 1) {
-				  				sendToRoom(playerNames[0] + " wants to foos. @here Who's in?");
+				  				sendToRoom("@here " + playerNames[0] + " wants to foos. Use <strong>/foos in</strong> to join.");
 				  			} else if (playerNames.length < 4) {
-								sendToRoom("Current players: " + playerNames.join(", "));
+								sendToRoom("You are already in the queue.");
 							} else {
-								sendToRoom(playerMentionNames.join(" ") + " go go go!");
-								Player.remove({}, function (err) {
-									if (err) console.log('Error deleting!');
-								});
+								foosGogogo();
 							}
 				  		}
 					});
@@ -129,18 +136,58 @@ function foosGogogo()
 	var playerMentionNames = Array();
 	Player.find(function(err, players) {
   		if (!err) {
+  			if (1 || players.length > 1) {
+	  			for (var i = 0; i < players.length; i++) {
+	  				var mentionName = players[i].mention_name;
+	  				if (mentionName) {
+	  					playerMentionNames.push("@" + mentionName);
+	  				}
+	  			}
+				console.log("GOGOGO: " + playerMentionNames.join(" "));
+				sendToRoom(playerMentionNames.join(" ") + "<h1>GO GO GO!</h1><br><img src='http://media.giphy.com/media/u4LHldXR1sJPy/giphy.gif'>");
+				Player.remove({}, function (err) {
+					if (err) console.log('Error deleting!');
+				});
+  			} else {
+  				sendToRoom("Not enough players to start. Use <strong>/foos clear</strong> to clear the queue.");
+  			}
+  		}
+	});
+
+  	response.send('success');
+}
+
+function foosWho()
+{
+	var playerMentionNames = Array();
+	Player.find(function(err, players) {
+  		if (!err) {
   			for (var i = 0; i < players.length; i++) {
-  				var mentionName = players[i].mention_name;
-  				if (mentionName) {
-  					playerMentionNames.push("@" + mentionName);
+  				var name = players[i].name;
+  				if (name) {
+  					playerNames.push(name);
   				}
   			}
-			console.log("GOGOGO: " + playerMentionNames.join(" "));
-			sendToRoom(playerMentionNames.join(" ") + "<h1>GO GO GO!</h1><br><img src='http://media.giphy.com/media/u4LHldXR1sJPy/giphy.gif'>");
+			console.log("who: " + playerNames.join(" "));
+			sendToRoom("On deck: " + playerNames.join(", "));
 			Player.remove({}, function (err) {
 				if (err) console.log('Error deleting!');
 			});
   		}
+	});
+
+  	response.send('success');
+}
+
+function foosClear()
+{
+	Player.remove({}, function (err) {
+		if (err) {
+			console.log('Error deleting!');
+			sendToRoom("Oops, something went wrong.");
+		} else {
+			sendToRoom("Queue cleared.");
+		}
 	});
 
   	response.send('success');
