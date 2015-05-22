@@ -30,7 +30,7 @@ app.get('/', function(request, response)
 	response.send('success');
 });
 
-app.get('/test', function (request, response)
+app.post('/test', function (request, response)
 {
 	console.log(request.body.item.message);
   	response.send("success");
