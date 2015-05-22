@@ -49,16 +49,18 @@ app.post('/foos', function(request, response)
 
 	if (message.indexOf("in") != -1) {
 		foosIn(playerName, playerMentionName);
+	} else if (message.indexOf("out") != -1) {
+		foosOut(playerName, playerMentionName);
 	} else if (message.indexOf("gogogo") != -1) {
 		foosGogogo();
 	} else {
-		sendToRoom("Usage: /foos [COMMAND]<br> <strong>in</strong> adds you to the current game queue<br> <strong>gogogo</strong> notifies all players and clears the queue");
+		sendToRoom("Usage: /foos [COMMAND]<br> <strong>in</strong> adds you to the current game queue<br> <strong>out</strong> removes you from the current game queue<br> <strong>gogogo</strong> notifies all players and clears the queue");
 	}
 });
 
 function foosIn(playerName, playerMentionName)
 {
-	console.log("Player: " + playerName);
+	console.log("Player In: " + playerMentionName);
 
 	Player.findOne({mention_name: playerMentionName}, function(err, existingPlayer) {
   		if (existingPlayer) {
@@ -87,7 +89,7 @@ function foosIn(playerName, playerMentionName)
 				  				}
 				  			}
 				  			if (playerNames.length == 1) {
-				  				sendToRoom(playerNames[0] + " wants to play some foosball. @here Who's in?");
+				  				sendToRoom(playerNames[0] + " wants to foos. @here Who's in?");
 				  			} else if (playerNames.length < 4) {
 								sendToRoom("Current players: " + playerNames.join(", "));
 							} else {
@@ -107,6 +109,21 @@ function foosIn(playerName, playerMentionName)
   	response.send('Success');
 }
 
+function foosOut(playerName, playerMentionName)
+{
+	console.log("Player Out: " + playerMentionName);
+
+	Player.findOne({mention_name: playerMentionName}, function(err, existingPlayer) {
+  		if (existingPlayer) {
+  			existingPlayer.remove(function(err) {
+				sendToRoom(existingPlayer.name + " is lame.");
+			});
+  		}
+  	});
+
+  	response.send('success');
+}
+
 function foosGogogo()
 {
 	var playerMentionNames = Array();
@@ -118,7 +135,8 @@ function foosGogogo()
   					playerMentionNames.push("@" + mentionName);
   				}
   			}
-			sendToRoom(playerMentionNames.join(" ") + " go go go!");
+			console.log("GOGOGO: " + playerMentionNames.join(" "));
+			sendToRoom(playerMentionNames.join(" ") + "<h1>GO GO GO!</h1><br><img src='http://media.giphy.com/media/u4LHldXR1sJPy/giphy.gif'>");
 			Player.remove({}, function (err) {
 				if (err) console.log('Error deleting!');
 			});
