@@ -45,7 +45,8 @@ app.post('/foos', function(request, response)
 {
 	var playerName = request.body.item.message.from.name;
 	var playerMentionName = request.body.item.message.from.mention_name;
-}
+	foosIn(playerName, playerMentionName);
+});
 
 function foosIn(playerName, playerMentionName)
 {
