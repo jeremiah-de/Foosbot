@@ -144,7 +144,7 @@ function foosGogogo()
 	  				}
 	  			}
 				console.log("GOGOGO: " + playerMentionNames.join(" "));
-				sendToRoom(playerMentionNames.join(" ") + "<h1>GO GO GO!</h1><br><img src='http://media.giphy.com/media/u4LHldXR1sJPy/giphy.gif'>");
+				sendToRoom(playerMentionNames.join(" ") + " <strong>GO GO GO!</strong><br><img src='http://media.giphy.com/media/u4LHldXR1sJPy/giphy.gif'>");
 				Player.remove({}, function (err) {
 					if (err) console.log('Error deleting!');
 				});
@@ -159,20 +159,24 @@ function foosGogogo()
 
 function foosWho()
 {
-	var playerMentionNames = Array();
+	var playerNames = Array();
 	Player.find(function(err, players) {
   		if (!err) {
-  			for (var i = 0; i < players.length; i++) {
-  				var name = players[i].name;
-  				if (name) {
-  					playerNames.push(name);
-  				}
-  			}
-			console.log("who: " + playerNames.join(" "));
-			sendToRoom("On deck: " + playerNames.join(", "));
-			Player.remove({}, function (err) {
-				if (err) console.log('Error deleting!');
-			});
+  			if (players.length > 0) {
+	  			for (var i = 0; i < players.length; i++) {
+	  				var name = players[i].name;
+	  				if (name) {
+	  					playerNames.push(name);
+	  				}
+	  			}
+				console.log("who: " + playerNames.join(" "));
+				sendToRoom("On deck: " + playerNames.join(", "));
+				Player.remove({}, function (err) {
+					if (err) console.log('Error deleting!');
+				});
+			} else {
+				sendToRoom("Nobody wants to play (sadpanda)");
+			}
   		}
 	});
 
