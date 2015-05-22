@@ -45,7 +45,15 @@ app.post('/foos', function(request, response)
 {
 	var playerName = request.body.item.message.from.name;
 	var playerMentionName = request.body.item.message.from.mention_name;
-	foosIn(playerName, playerMentionName);
+	var message = request.body.item.message.message;
+
+	if (message.indexOf("in") != -1) {
+		foosIn(playerName, playerMentionName);
+	} else if (message.indexOf("gogogo") != -1) {
+		foosGogogo();
+	} else {
+		sendToRoom("Usage:\n/foos");
+	}
 });
 
 function foosIn(playerName, playerMentionName)
