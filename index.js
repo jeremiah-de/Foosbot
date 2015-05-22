@@ -166,9 +166,6 @@ function foosWho()
 	  			}
 				console.log("who: " + playerNames.join(" "));
 				sendToRoom("On deck: " + playerNames.join(", "));
-				Player.remove({}, function (err) {
-					if (err) console.log('Error deleting!');
-				});
 			} else {
 				sendToRoom("Nobody wants to play :(");
 			}
