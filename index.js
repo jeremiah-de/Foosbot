@@ -103,7 +103,7 @@ function foosIn(playerName, playerMentionName)
 				  			if (playerNames.length == 1) {
 				  				sendToRoom("@here " + playerNames[0] + " wants to foos. Use <strong>/foos in</strong> to join.");
 				  			} else if (playerNames.length < 4) {
-								sendToRoom("You are already in the queue.");
+								foosWho();
 							} else {
 								foosGogogo();
 							}
