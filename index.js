@@ -97,7 +97,7 @@ function foosIn(playerName, playerMentionName)
 
 
   	response.send('Success');
-});
+}
 
 function foosGogogo()
 {
@@ -118,7 +118,7 @@ function foosGogogo()
 	});
 
   	response.send('success');
-});
+}
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
