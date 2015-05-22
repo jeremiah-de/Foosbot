@@ -27,18 +27,13 @@ var Player = mongoose.model('Player', playerSchema);
 
 app.get('/', function(request, response)
 {
-	response.send('Success');
+	response.send('success');
 });
 
-app.get('/get', function (request, response)
+app.get('/test', function (request, response)
 {
-	Player.find(function(err, players) {
-  		if (err) {
-			response.send('Error: ' + err);
-  			return console.error(err);
-  		}
-  		response.send(players);
-	});
+	console.log(request.body.item.message);
+  	response.send("success");
 });
 
 app.post('/foos', function(request, response)
