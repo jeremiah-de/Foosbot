@@ -30,15 +30,13 @@ app.get('/', function(request, response)
 	response.send('success');
 });
 
-app.post('/test', function (request, response)
+app.get('/test', function (request, response)
 {
-	console.log(request.body.item.message);
+	giphyURLForSearchTerm('go', function(url) {
+		console.log("worked: " + url);
+	});
 
-	var message = request.body.item.message.message;
-
-	if (message.indexOf("ok") != -1) console.log("ok");
-
-  	response.send("success");
+  	response.send("");
 });
 
 app.post('/foos', function(request, response)
@@ -143,7 +141,9 @@ function foosGogogo()
 	  				}
 	  			}
 				console.log("GOGOGO: " + playerMentionNames.join(" "));
-				sendToRoom(playerMentionNames.join(" ") + " <strong>GO GO GO!</strong><br><img src='http://media.giphy.com/media/u4LHldXR1sJPy/giphy.gif'>");
+				giphyURLForSearchTerm('go', function(url) {
+					sendToRoom(playerMentionNames.join(" ") + " <strong>GO GO GO!</strong><br><img src='" + url + "'>");
+				});
 				Player.remove({}, function (err) {
 					if (err) console.log('Error deleting!');
 				});
@@ -206,6 +206,29 @@ function sendToRoom(message)
 	        console.log(error);
 	    } else {
 	        console.log(response.statusCode, body);
+	    }
+	});
+}
+
+function giphyURLForSearchTerm(term, func)
+{
+	var request = require('request')
+
+    request({
+        url: 'http://api.giphy.com/v1/gifs/search',
+        method: 'GET',
+        qs: { 'q': term, 'api_key': 'dc6zaTOxFJmzC' },
+        json: true
+    }, function(error, response, body) {
+	    if(error) {
+	        console.log(error);
+	        func();
+	    } else {
+	    	var images = response.body.data;
+	    	var imageIndex = Math.floor((Math.random() * images.length));
+	    	var imageURL = images[imageIndex].images.fixed_height.url
+	    	console.log(imageURL);
+	    	func(imageURL)
 	    }
 	});
 }
