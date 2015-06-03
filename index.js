@@ -141,7 +141,7 @@ function foosGogogo()
 	  				}
 	  			}
 				console.log("GOGOGO: " + playerMentionNames.join(" "));
-				giphyURLForSearchTerm('go', function(url) {
+				giphyURLForSearchTerm('gogogo', function(url) {
 					sendToRoom(playerMentionNames.join(" ") + " <strong>GO GO GO!</strong><br><img src='" + url + "'>");
 				});
 				Player.remove({}, function (err) {
