@@ -56,6 +56,8 @@ app.post('/foos', function(request, response)
 			foosWho();
 		} else if (message.indexOf("clear") != -1) {
 			foosClear();
+		} else if (message.indexOf("test") != -1) {
+			foosTest();
 		} else {
 			var usage = Array("Usage: /foos [COMMAND]");
 			usage.push("<strong>in</strong> adds you to the current game queue");
@@ -184,6 +186,13 @@ function foosClear()
 		} else {
 			sendToRoom("Queue cleared");
 		}
+	});
+}
+
+function foosTest()
+{
+	giphyURLForSearchTerm('gogogo', function(url) {
+		sendToRoom("<img src='" + url + "'>");
 	});
 }
 
