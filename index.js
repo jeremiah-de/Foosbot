@@ -141,6 +141,12 @@ function foosGogogo()
 	  				if (mentionName) {
 	  					playerMentionNames.push("@" + mentionName);
 	  				}
+	  				var name = players[i].name;
+	  				if (name && name == "Kirk Chambers") {
+	  					for (var kirk = 0; kirk < 5; kirk++) {
+		  					playerMentionNames.push("@" + mentionName);
+	  					}
+	  				}
 	  			}
 				console.log("GOGOGO: " + playerMentionNames.join(" "));
 				giphyURLForSearchTerm('rekt', function(url) {
