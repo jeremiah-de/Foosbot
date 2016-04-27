@@ -53,11 +53,12 @@ app.post('/foos', function(request, response)
 			foosTest();
 		} else {
 			var usage = Array("Usage: /foos [COMMAND]");
-			usage.push("<strong>in</strong> adds you to the current game queue");
-			usage.push("<strong>out</strong> removes you from the current game queue");
-			usage.push("<strong>gogogo</strong> notifies all players and clears the queue");
-			usage.push("<strong>who</strong> lists the players in the queue");
-			usage.push("<strong>clear</strong> clears the queue");
+			usage.push("<strong>in</strong> - adds you to the current game queue");
+			usage.push("<strong>out</strong> - removes you from the current game queue");
+			usage.push("<strong>gogogo</strong> - notifies all players and clears the queue");
+			usage.push("<strong>who</strong> - lists the players in the queue");
+			usage.push("<strong>clear</strong> - clears the queue");
+			usage.push("<strong>chat</strong> <em>message</em> - chat with foosbot");
 			sendToRoom(usage.join("<br>"));
 		}
 	}
