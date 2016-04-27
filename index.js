@@ -37,7 +37,9 @@ app.post('/foos', function(request, response)
 	var message = request.body.item.message.message;
 
 	if (message.substring(0, 5) == "/foos") {
-		if (message.indexOf("in") != -1) {
+		if (message.indexOf("chat") != -1) {
+			foosChat(message.substring("/foos chat".length + 1));
+		} else if (message.indexOf("in") != -1) {
 			foosIn(playerName, playerMentionName);
 		} else if (message.indexOf("out") != -1) {
 			foosOut(playerName, playerMentionName);
@@ -49,8 +51,6 @@ app.post('/foos', function(request, response)
 			foosClear();
 		} else if (message.indexOf("test") != -1 && playerName == "Jeremiah Gage") {
 			foosTest();
-		} else if (message.indexOf("chat") != -1) {
-			foosChat(message.substring(5));
 		} else {
 			var usage = Array("Usage: /foos [COMMAND]");
 			usage.push("<strong>in</strong> adds you to the current game queue");
