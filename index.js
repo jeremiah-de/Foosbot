@@ -49,7 +49,7 @@ app.post('/foos', function(request, response)
 			foosClear();
 		} else if (message.indexOf("test") != -1 && playerName == "Jeremiah Gage") {
 			foosTest();
-		} else if (message.indexOf("chat")) {
+		} else if (message.indexOf("chat") != -1) {
 			foosChat(message.substring(5));
 		} else {
 			var usage = Array("Usage: /foos [COMMAND]");
