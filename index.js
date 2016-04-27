@@ -30,17 +30,6 @@ app.get('/', function(request, response)
 	response.send('success');
 });
 
-app.post('/test', function (request, response)
-{
-	var searchTerms = Array('rekt', 'owned');
-	var searchTermIndex = Math.floor((Math.random() * searchTerms.length));
-	giphyURLForSearchTerm(searchTerms[searchTermIndex], function(url) {
-		sendToRoom("test");//<img src='" + url + "'>");
-	});
-
-  	response.send("Test" + searchTermIndex);
-});
-
 app.post('/foos', function(request, response)
 {
 	var playerName = request.body.item.message.from.name;
@@ -58,7 +47,7 @@ app.post('/foos', function(request, response)
 			foosWho();
 		} else if (message.indexOf("clear") != -1) {
 			foosClear();
-		} else if (message.indexOf("test") != -1) {
+		} else if (message.indexOf("test") != -1 && playerName == "Jeremiah Gage") {
 			foosTest();
 		} else {
 			var usage = Array("Usage: /foos [COMMAND]");
@@ -73,6 +62,15 @@ app.post('/foos', function(request, response)
 
   	response.send('Success');
 });
+
+function foosTest()
+{
+	var searchTerms = Array('rekt', 'owned');
+	var searchTermIndex = Math.floor((Math.random() * searchTerms.length));
+	giphyURLForSearchTerm(searchTerms[searchTermIndex], function(url) {
+		sendToRoom("<img src='" + url + "'>");
+	});
+}
 
 function foosIn(playerName, playerMentionName)
 {
@@ -196,13 +194,6 @@ function foosClear()
 		} else {
 			sendToRoom("Queue cleared");
 		}
-	});
-}
-
-function foosTest()
-{
-	giphyURLForSearchTerm('gogogo', function(url) {
-		sendToRoom("<img src='" + url + "'>");
 	});
 }
 
