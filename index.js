@@ -201,9 +201,9 @@ function foosClear()
 
 function foosChat(message)
 {
-	var cleverbot = require("cleverbot.io"),
-	bot = new cleverbot(process.env.CLEVERBOT_USER, process.env.CLEVERBOT_API_KEY);
-	bot.setNick("gagetest")
+	var cleverbot = require("cleverbot.io");
+	var bot = new cleverbot(process.env.CLEVERBOT_USER, process.env.CLEVERBOT_API_KEY);
+	bot.setNick("gagetest");
 	bot.create(function (err, session) {});
 	bot.ask(message, function (err, response) {
   		sendToRoom(response);
