@@ -9,7 +9,7 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 var mongoose = require ("mongoose");
-var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/HelloMongoose';
+var uristring = process.env.MONGOLAB_URI || process.env.MONGODB_URI || 'mongodb://localhost/HelloMongoose';
 var theport = process.env.PORT || 5000;
 mongoose.connect(uristring, function (err, res) {
   if (err) {
@@ -38,7 +38,7 @@ app.post('/test', function (request, response)
 		sendToRoom("test");//<img src='" + url + "'>");
 	});
 
-  	response.send("Test");
+  	response.send("Test" + searchTermIndex);
 });
 
 app.post('/foos', function(request, response)
