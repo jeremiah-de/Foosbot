@@ -149,7 +149,7 @@ function foosGogogo()
 	  				}
 	  			}
 				console.log("GOGOGO: " + playerMentionNames.join(" "));
-				var searchTerms = Array('rekt', 'owned');
+				var searchTerms = Array('rekt', 'owned', 'pwnded', 'winning');
 				var searchTermIndex = Math.floor((Math.random() * searchTerms.length));
 				giphyURLForSearchTerm(searchTerms[searchTermIndex], function(url) {
 					sendToRoom(playerMentionNames.join(" ") + " <strong>GO GO GO!</strong><br><img src='" + url + "'>");
