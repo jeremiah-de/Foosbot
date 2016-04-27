@@ -35,7 +35,7 @@ app.post('/test', function (request, response)
 	var searchTerms = Array('rekt', 'owned');
 	var searchTermIndex = Math.floor((Math.random() * searchTerms.length));
 	giphyURLForSearchTerm(searchTerms[searchTermIndex], function(url) {
-		sendToRoom("<img src='" + url + "'>");
+		sendToRoom(searchTermIndex + "<img src='" + url + "'>");
 	});
 
   	response.send("Test");
