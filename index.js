@@ -49,6 +49,8 @@ app.post('/foos', function(request, response)
 			foosClear();
 		} else if (message.indexOf("test") != -1 && playerName == "Jeremiah Gage") {
 			foosTest();
+		} else if (message.indexOf("chat")) {
+			foosChat(message.substring(5));
 		} else {
 			var usage = Array("Usage: /foos [COMMAND]");
 			usage.push("<strong>in</strong> adds you to the current game queue");
@@ -194,6 +196,17 @@ function foosClear()
 		} else {
 			sendToRoom("Queue cleared");
 		}
+	});
+}
+
+function foosChat(message)
+{
+	var cleverbot = require("cleverbot.io"),
+	bot = new cleverbot(process.env.CLEVERBOT_USER, process.env.CLEVERBOT_API_KEY);
+	bot.setNick("gagetest")
+	bot.create(function (err, session) {});
+	bot.ask(message, function (err, response) {
+  		sendToRoom(response);
 	});
 }
 
