@@ -30,13 +30,15 @@ app.get('/', function(request, response)
 	response.send('success');
 });
 
-app.get('/test', function (request, response)
+app.post('/test', function (request, response)
 {
-	giphyURLForSearchTerm('go', function(url) {
-		console.log("worked: " + url);
+	var searchTerms = Array('rekt', 'owned');
+	var searchTermIndex = Math.floor((Math.random() * searchTerms.length));
+	giphyURLForSearchTerm(searchTerms[searchTermIndex], function(url) {
+		sendToRoom("<img src='" + url + "'>");
 	});
 
-  	response.send("");
+  	response.send("Test");
 });
 
 app.post('/foos', function(request, response)
