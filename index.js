@@ -152,7 +152,7 @@ function foosGogogo()
 	  				}
 	  			}
 				console.log("GOGOGO: " + playerMentionNames.join(" "));
-				var searchTerms = Array('rekt', 'owned', 'pwnded', 'winning');
+				var searchTerms = Array('rekt', 'owned', 'pwned', 'winning');
 				var searchTermIndex = Math.floor((Math.random() * searchTerms.length));
 				giphyURLForSearchTerm(searchTerms[searchTermIndex], function(url) {
 					sendToRoom(playerMentionNames.join(" ") + " <strong>GO GO GO!</strong><br><img src='" + url + "'>");
@@ -251,6 +251,9 @@ function giphyURLForSearchTerm(term, func)
 	    	var images = response.body.data;
 	    	var imageIndex = Math.floor((Math.random() * images.length));
 	    	var imageURL = images[imageIndex].images.fixed_height.url
+	    	if (!imageURL || imageURL.length == 0) {
+	    		imageURL = 'https://media.giphy.com/media/Ojd9pgisdY7Nm/giphy.gif';
+	    	}
 	    	console.log(imageURL);
 	    	func(imageURL)
 	    }
